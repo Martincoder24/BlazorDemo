@@ -1,0 +1,48 @@
+﻿@page "/addherodata"
+
+<PageTitle>Add Hero Page</PageTitle>
+
+@using BlazorDemo.Data
+@inject HeroRepository _heroRepository
+
+<h1>Add Heroes Page</h1>
+
+<p>Type in your values here.</p>
+
+<form>
+    <label>Name:</label>
+    <input @bind="_name"/>
+    <label>Hero Name:</label>
+    <input @bind="_heroName"/>
+    <label>Power 1:</label>
+    <input @bind="_power1"/>
+    <label>Power 2:</label>
+    <input @bind="_power2"/>
+    <label>Power 3:</label>
+    <input @bind="_power3"/>
+    <button class="btn btn-success" @onclick="AddHero">Add hero</button>
+</form>
+
+@code {
+    private string _name;
+    private string _heroName;
+    private string _power1;
+    private string _power2;
+    private string _power3;
+    private List<string>? _powers = new List<string>();
+    
+
+    protected  async Task AddHero()
+    {
+        _powers.Add(_power1);
+        _powers.Add(_power2);
+        _powers.Add(_power3);
+        var hero = new Hero()
+        {
+            HeroName = _heroName,
+            Name = _name,
+            Powers = _powers 
+        };
+         _heroRepository.CreateHero(hero);
+    }
+}
